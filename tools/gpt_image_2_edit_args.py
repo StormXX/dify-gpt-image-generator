@@ -1,5 +1,4 @@
 import base64
-import re
 from typing import Any
 
 
@@ -15,12 +14,7 @@ QUALITY_VALUES = {"low", "medium", "high", "auto"}
 OUTPUT_FORMAT_VALUES = {"auto", "png", "jpeg", "webp"}
 BACKGROUND_VALUES = {"auto", "opaque"}
 MODERATION_VALUES = {"auto", "low"}
-
-SIZE_PATTERN = re.compile(r"^(\d+)x(\d+)$")
-MIN_PIXELS = 655_360
-MAX_PIXELS = 8_294_400
-MAX_EDGE = 3_840
-MAX_RATIO = 3
+SIZE_VALUES = {"auto", "1024x1024", "1536x1024", "1024x1536"}
 
 
 class ParameterError(ValueError):
@@ -332,25 +326,11 @@ def _to_bool(value: Any, name: str) -> bool:
 
 
 def _validate_size(size: str) -> None:
-    match = SIZE_PATTERN.fullmatch(size)
-    if not match:
-        raise ParameterError("Invalid size. Use auto or a WxH string such as 1024x1024.")
-
-    width = int(match.group(1))
-    height = int(match.group(2))
-    if width % 16 != 0 or height % 16 != 0:
-        raise ParameterError("Invalid size. Width and height must each be a multiple of 16.")
-    if width > MAX_EDGE or height > MAX_EDGE:
-        raise ParameterError("Invalid size. Maximum edge length is 3840px.")
-
-    total_pixels = width * height
-    if total_pixels < MIN_PIXELS or total_pixels > MAX_PIXELS:
-        raise ParameterError("Invalid size. Total pixels must be between 655360 and 8294400.")
-
-    long_edge = max(width, height)
-    short_edge = min(width, height)
-    if long_edge / short_edge > MAX_RATIO:
-        raise ParameterError("Invalid size. Long edge to short edge ratio must not exceed 3:1.")
+    if size not in SIZE_VALUES:
+        raise ParameterError(
+            "Invalid size. Choose one of the official GPT image sizes: "
+            "auto, 1024x1024, 1536x1024, or 1024x1536."
+        )
 
 
 def _get_attr(value: Any, key: str) -> Any:

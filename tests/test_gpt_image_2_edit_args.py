@@ -61,15 +61,20 @@ class GPTImage2EditArgsTests(unittest.TestCase):
         self.assertIs(args["stream"], True)
         self.assertNotIn("partial_images", args)
 
-    def test_validates_custom_size_against_gpt_image_2_constraints(self):
-        args = build_edit_args(
-            {"prompt": "edit it", "size": "2048x1152"},
-            include_image=False,
-        )
-        self.assertEqual(args["size"], "2048x1152")
+    def test_accepts_only_official_gpt_image_size_values(self):
+        for size in ("auto", "1024x1024", "1536x1024", "1024x1536"):
+            with self.subTest(size=size):
+                args = build_edit_args(
+                    {"prompt": "edit it", "size": size},
+                    include_image=False,
+                )
+                if size == "auto":
+                    self.assertNotIn("size", args)
+                else:
+                    self.assertEqual(args["size"], size)
 
-        with self.assertRaisesRegex(ParameterError, "multiple of 16"):
-            build_edit_args({"prompt": "edit it", "size": "1025x1024"}, include_image=False)
+        with self.assertRaisesRegex(ParameterError, "official GPT image sizes"):
+            build_edit_args({"prompt": "edit it", "size": "2048x1152"}, include_image=False)
 
     def test_decodes_plain_and_data_url_images(self):
         raw = b"image bytes"
