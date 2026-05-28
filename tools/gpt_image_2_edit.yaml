@@ -9,8 +9,8 @@ identity:
     zh_Hans: Edit one or more images with OpenAI gpt-image-2 and expanded output controls.
 description:
   human:
-    en_US: Edit one or more images with gpt-image-2. Includes output format, compression, background, moderation, and optional streaming controls.
-    zh_Hans: Edit one or more images with gpt-image-2. Includes output format, compression, background, moderation, and optional streaming controls.
+    en_US: Edit one or more images with gpt-image-2. Includes output format, compression, background, and optional streaming controls.
+    zh_Hans: Edit one or more images with gpt-image-2. Includes output format, compression, background, and optional streaming controls.
   llm: Edit one or more input images using OpenAI gpt-image-2. Use jpeg or webp plus lower quality for lower latency previews.
 parameters:
   - name: prompt
@@ -162,26 +162,6 @@ parameters:
     human_description:
       en_US: Compression for JPEG/WebP output. Ignored for PNG or auto format.
       zh_Hans: Compression for JPEG/WebP output. Ignored for PNG or auto format.
-  - name: moderation
-    type: select
-    required: false
-    form: form
-    default: auto
-    label:
-      en_US: Moderation
-      zh_Hans: Moderation
-    human_description:
-      en_US: Content moderation strictness for GPT image models.
-      zh_Hans: Content moderation strictness for GPT image models.
-    options:
-      - value: auto
-        label:
-          en_US: Auto
-          zh_Hans: Auto
-      - value: low
-        label:
-          en_US: Low
-          zh_Hans: Low
   - name: background
     type: select
     required: false

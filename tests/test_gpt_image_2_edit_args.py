@@ -48,6 +48,14 @@ class GPTImage2EditArgsTests(unittest.TestCase):
                 include_image=False,
             )
 
+    def test_does_not_pass_moderation_to_image_edit_sdk(self):
+        args = build_edit_args(
+            {"prompt": "edit it", "moderation": "low"},
+            include_image=False,
+        )
+
+        self.assertNotIn("moderation", args)
+
     def test_streaming_uses_final_only_transport(self):
         args = build_edit_args(
             {

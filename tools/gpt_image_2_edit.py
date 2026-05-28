@@ -44,7 +44,7 @@ class GPTImage2EditTool(Tool):
             client = self._client()
             logger.info(
                 "gpt-image-2 edit invoked: prompt_len=%s images=%s has_mask=%s size=%s quality=%s "
-                "format=%s compression=%s background=%s moderation=%s stream=%s n=%s",
+                "format=%s compression=%s background=%s stream=%s n=%s",
                 len(edit_args["prompt"]),
                 len(image_files),
                 bool(mask_file),
@@ -53,7 +53,6 @@ class GPTImage2EditTool(Tool):
                 edit_args.get("output_format", "auto"),
                 edit_args.get("output_compression", "default"),
                 edit_args.get("background", "auto"),
-                edit_args.get("moderation", "auto"),
                 edit_args.get("stream", False),
                 edit_args.get("n", 1),
             )

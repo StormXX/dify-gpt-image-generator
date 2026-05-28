@@ -13,7 +13,6 @@ MODEL = "gpt-image-2"
 QUALITY_VALUES = {"low", "medium", "high", "auto"}
 OUTPUT_FORMAT_VALUES = {"auto", "png", "jpeg", "webp"}
 BACKGROUND_VALUES = {"auto", "opaque"}
-MODERATION_VALUES = {"auto", "low"}
 SIZE_VALUES = {"auto", "1024x1024", "1536x1024", "1024x1536"}
 
 
@@ -69,12 +68,6 @@ def build_edit_args(parameters: dict[str, Any], *, include_image: bool = True) -
         raise ParameterError("Invalid background. Choose auto or opaque.")
     if background != "auto":
         args["background"] = background
-
-    moderation = _string_choice(parameters.get("moderation", "auto"), "moderation")
-    if moderation not in MODERATION_VALUES:
-        raise ParameterError("Invalid moderation. Choose auto or low.")
-    if moderation != "auto":
-        args["moderation"] = moderation
 
     n = _bounded_int(parameters.get("n", 1), "n", minimum=1, maximum=10)
     args["n"] = n

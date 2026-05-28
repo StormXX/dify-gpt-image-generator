@@ -8,7 +8,6 @@ tool but with these additional controls:
 - `output_format`: `jpeg`, `webp`, `png`, or `auto`
 - `output_compression`: `0` to `100`, used only for JPEG/WebP
 - `background`: `opaque` or `auto`; transparent is intentionally blocked for `gpt-image-2`
-- `moderation`: `auto` or `low`
 - `stream`, while still emitting only final completed images to Dify
 - `user` for OpenAI abuse monitoring
 
