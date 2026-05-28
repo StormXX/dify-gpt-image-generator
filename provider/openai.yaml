@@ -1,0 +1,49 @@
+identity:
+  author: stormxx
+  name: openai_gpt_image
+  label:
+    en_US: OpenAI
+    zh_Hans: OpenAI
+  description:
+    en_US: OpenAI GPT Image tools with expanded edit controls.
+    zh_Hans: OpenAI GPT Image tools with expanded edit controls.
+  icon: icon.svg
+credentials_for_provider:
+  openai_api_key:
+    type: secret-input
+    required: true
+    label:
+      en_US: OpenAI API key
+      zh_Hans: OpenAI API key
+    placeholder:
+      en_US: Enter your OpenAI API key
+      zh_Hans: Enter your OpenAI API key
+    help:
+      en_US: Stored by Dify as a provider credential. Do not put keys in plugin files.
+      zh_Hans: Stored by Dify as a provider credential. Do not put keys in plugin files.
+  openai_base_url:
+    type: text-input
+    required: false
+    label:
+      en_US: OpenAI base URL
+      zh_Hans: OpenAI base URL
+    placeholder:
+      en_US: Optional, for example https://api.openai.com
+      zh_Hans: Optional, for example https://api.openai.com
+    help:
+      en_US: The plugin appends /v1 unless the URL already ends with /v1.
+      zh_Hans: The plugin appends /v1 unless the URL already ends with /v1.
+  openai_organization_id:
+    type: text-input
+    required: false
+    label:
+      en_US: OpenAI organization ID
+      zh_Hans: OpenAI organization ID
+    placeholder:
+      en_US: Optional organization ID
+      zh_Hans: Optional organization ID
+tools:
+  - tools/gpt_image_2_edit.yaml
+extra:
+  python:
+    source: provider/openai.py

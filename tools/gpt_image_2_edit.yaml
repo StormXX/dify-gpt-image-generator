@@ -1,0 +1,211 @@
+identity:
+  author: stormxx
+  name: gpt_image_2_edit_plus
+  label:
+    en_US: GPT Image 2 Edit Plus
+    zh_Hans: GPT Image 2 Edit Plus
+  description:
+    en_US: Edit one or more images with OpenAI gpt-image-2 and expanded output controls.
+    zh_Hans: Edit one or more images with OpenAI gpt-image-2 and expanded output controls.
+description:
+  human:
+    en_US: Edit one or more images with gpt-image-2. Includes output format, compression, background, moderation, and optional streaming controls.
+    zh_Hans: Edit one or more images with gpt-image-2. Includes output format, compression, background, moderation, and optional streaming controls.
+  llm: Edit one or more input images using OpenAI gpt-image-2. Use jpeg or webp plus lower quality for lower latency previews.
+parameters:
+  - name: prompt
+    type: string
+    required: true
+    form: llm
+    label:
+      en_US: Prompt
+      zh_Hans: Prompt
+    human_description:
+      en_US: Text instructions describing how to edit or combine the input images.
+      zh_Hans: Text instructions describing how to edit or combine the input images.
+    llm_description: Detailed edit instructions for the input image or images.
+  - name: image
+    type: files
+    required: true
+    form: llm
+    mime_types:
+      - image/png
+      - image/jpeg
+      - image/webp
+    label:
+      en_US: Image(s)
+      zh_Hans: Image(s)
+    human_description:
+      en_US: One or more images to edit.
+      zh_Hans: One or more images to edit.
+    llm_description: One or more input image files.
+  - name: mask
+    type: file
+    required: false
+    form: llm
+    mime_types:
+      - image/png
+    label:
+      en_US: Mask
+      zh_Hans: Mask
+    human_description:
+      en_US: Optional PNG mask for inpainting. The mask should match the input image size and use alpha transparency.
+      zh_Hans: Optional PNG mask for inpainting. The mask should match the input image size and use alpha transparency.
+    llm_description: Optional PNG mask where transparent pixels mark the editable region.
+  - name: size
+    type: string
+    required: false
+    form: form
+    default: "1024x1024"
+    label:
+      en_US: Image size
+      zh_Hans: Image size
+    human_description:
+      en_US: Use auto or a WxH size such as 1024x1024, 1536x1024, 1024x1536, 2048x2048, or 2048x1152. Edges must be multiples of 16.
+      zh_Hans: Use auto or a WxH size such as 1024x1024, 1536x1024, 1024x1536, 2048x2048, or 2048x1152. Edges must be multiples of 16.
+  - name: quality
+    type: select
+    required: false
+    form: form
+    default: medium
+    label:
+      en_US: Image quality
+      zh_Hans: Image quality
+    human_description:
+      en_US: Low is fastest for previews; medium is the default for app-facing output.
+      zh_Hans: Low is fastest for previews; medium is the default for app-facing output.
+    options:
+      - value: low
+        label:
+          en_US: Low
+          zh_Hans: Low
+      - value: medium
+        label:
+          en_US: Medium
+          zh_Hans: Medium
+      - value: high
+        label:
+          en_US: High
+          zh_Hans: High
+      - value: auto
+        label:
+          en_US: Auto
+          zh_Hans: Auto
+  - name: n
+    type: number
+    required: false
+    form: form
+    default: 1
+    min: 1
+    max: 10
+    label:
+      en_US: Number of images
+      zh_Hans: Number of images
+    human_description:
+      en_US: Number of edited images to generate.
+      zh_Hans: Number of edited images to generate.
+  - name: output_format
+    type: select
+    required: false
+    form: form
+    default: jpeg
+    label:
+      en_US: Output format
+      zh_Hans: Output format
+    human_description:
+      en_US: JPEG is usually faster than PNG when transparency is not required.
+      zh_Hans: JPEG is usually faster than PNG when transparency is not required.
+    options:
+      - value: jpeg
+        label:
+          en_US: JPEG
+          zh_Hans: JPEG
+      - value: webp
+        label:
+          en_US: WebP
+          zh_Hans: WebP
+      - value: png
+        label:
+          en_US: PNG
+          zh_Hans: PNG
+      - value: auto
+        label:
+          en_US: Auto
+          zh_Hans: Auto
+  - name: output_compression
+    type: number
+    required: false
+    form: form
+    default: 85
+    min: 0
+    max: 100
+    label:
+      en_US: Output compression
+      zh_Hans: Output compression
+    human_description:
+      en_US: Compression for JPEG/WebP output. Ignored for PNG or auto format.
+      zh_Hans: Compression for JPEG/WebP output. Ignored for PNG or auto format.
+  - name: moderation
+    type: select
+    required: false
+    form: form
+    default: auto
+    label:
+      en_US: Moderation
+      zh_Hans: Moderation
+    human_description:
+      en_US: Content moderation strictness for GPT image models.
+      zh_Hans: Content moderation strictness for GPT image models.
+    options:
+      - value: auto
+        label:
+          en_US: Auto
+          zh_Hans: Auto
+      - value: low
+        label:
+          en_US: Low
+          zh_Hans: Low
+  - name: background
+    type: select
+    required: false
+    form: form
+    default: opaque
+    label:
+      en_US: Background
+      zh_Hans: Background
+    human_description:
+      en_US: gpt-image-2 supports auto or opaque. Transparent background is intentionally unavailable.
+      zh_Hans: gpt-image-2 supports auto or opaque. Transparent background is intentionally unavailable.
+    options:
+      - value: opaque
+        label:
+          en_US: Opaque
+          zh_Hans: Opaque
+      - value: auto
+        label:
+          en_US: Auto
+          zh_Hans: Auto
+  - name: stream
+    type: boolean
+    required: false
+    form: form
+    default: false
+    label:
+      en_US: Use streaming transport
+      zh_Hans: Use streaming transport
+    human_description:
+      en_US: Use OpenAI image streaming transport while emitting only the final completed image to Dify.
+      zh_Hans: Use OpenAI image streaming transport while emitting only the final completed image to Dify.
+  - name: user
+    type: string
+    required: false
+    form: form
+    label:
+      en_US: End-user ID
+      zh_Hans: End-user ID
+    human_description:
+      en_US: Optional stable end-user identifier for OpenAI abuse monitoring.
+      zh_Hans: Optional stable end-user identifier for OpenAI abuse monitoring.
+extra:
+  python:
+    source: tools/gpt_image_2_edit.py
