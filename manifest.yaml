@@ -6,8 +6,8 @@ label:
   en_US: GPT Image Generator
   zh_Hans: GPT Image Generator
 description:
-  en_US: Custom OpenAI gpt-image-2 editing tool with latency-oriented output controls.
-  zh_Hans: Custom OpenAI gpt-image-2 editing tool with latency-oriented output controls.
+  en_US: Custom OpenAI gpt-image-2 generation and editing tools with latency-oriented output controls.
+  zh_Hans: Custom OpenAI gpt-image-2 generation and editing tools with latency-oriented output controls.
 icon: icon.svg
 icon_dark: icon-dark.svg
 resource:

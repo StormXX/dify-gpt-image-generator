@@ -92,10 +92,13 @@ def collect_streamed_final_images(
     edit_args: dict[str, Any],
     *,
     elapsed_seconds: float,
+    operation: str = "edit",
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     final_usage: dict[str, Any] = {}
     partial_image_count = 0
     final_images: list[dict[str, Any]] = []
+    partial_event_type = f"image_{operation}.partial_image"
+    completed_event_type = f"image_{operation}.completed"
 
     for event in stream:
         payload = extract_event_payload(event)
@@ -104,10 +107,10 @@ def collect_streamed_final_images(
         if payload.get("usage"):
             final_usage = usage_to_dict(payload["usage"])
 
-        if event_type == "image_edit.partial_image":
+        if event_type == partial_event_type:
             partial_image_count += 1
             continue
-        if event_type != "image_edit.completed":
+        if event_type != completed_event_type:
             continue
 
         b64_json = payload.get("b64_json")
@@ -119,7 +122,7 @@ def collect_streamed_final_images(
         metadata: dict[str, Any] = {
             "mime_type": mime_type,
             "model": MODEL,
-            "operation": "edit",
+            "operation": operation,
             "stream": True,
             "elapsed_seconds": elapsed_seconds,
         }
@@ -130,7 +133,7 @@ def collect_streamed_final_images(
 
     summary: dict[str, Any] = {
         "model": MODEL,
-        "operation": "edit",
+        "operation": operation,
         "stream": True,
         "image_count": len(final_images),
         "partial_image_count": partial_image_count,

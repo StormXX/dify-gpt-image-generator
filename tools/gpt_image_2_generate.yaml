@@ -1,0 +1,180 @@
+identity:
+  author: stormxx
+  name: gpt_image_2_generate
+  label:
+    en_US: GPT Image 2 Generate
+    zh_Hans: GPT Image 2 Generate
+  description:
+    en_US: Generate images from text prompts with OpenAI gpt-image-2.
+    zh_Hans: 使用 OpenAI gpt-image-2 根据文本提示词生成图片。
+description:
+  human:
+    en_US: Generate one or more images from a text prompt with gpt-image-2. Includes output format, compression, background, and optional streaming controls.
+    zh_Hans: 使用 gpt-image-2 根据文本提示词生成一张或多张图片，支持输出格式、压缩、背景和可选流式传输控制。
+  llm: Generate one or more images from a text prompt using OpenAI gpt-image-2. Use jpeg or webp plus lower quality for lower latency previews.
+parameters:
+  - name: prompt
+    type: string
+    required: true
+    form: llm
+    label:
+      en_US: Prompt
+      zh_Hans: Prompt
+    human_description:
+      en_US: Text prompt describing the image to generate.
+      zh_Hans: 描述要生成图片的文本提示词。
+    llm_description: Detailed text prompt for the image to generate.
+  - name: size
+    type: select
+    required: false
+    form: form
+    default: "1024x1024"
+    label:
+      en_US: Image size
+      zh_Hans: Image size
+    human_description:
+      en_US: Output size. GPT image models support square, landscape, portrait, or auto.
+      zh_Hans: 输出尺寸。GPT 图像模型支持正方形、横向、纵向或自动。
+    options:
+      - value: "1024x1024"
+        label:
+          en_US: Square 1024x1024
+          zh_Hans: Square 1024x1024
+      - value: "1536x1024"
+        label:
+          en_US: Landscape 1536x1024
+          zh_Hans: Landscape 1536x1024
+      - value: "1024x1536"
+        label:
+          en_US: Portrait 1024x1536
+          zh_Hans: Portrait 1024x1536
+      - value: auto
+        label:
+          en_US: Auto
+          zh_Hans: Auto
+  - name: quality
+    type: select
+    required: false
+    form: form
+    default: medium
+    label:
+      en_US: Image quality
+      zh_Hans: Image quality
+    human_description:
+      en_US: Low is fastest for previews; medium is the default for app-facing output.
+      zh_Hans: low 更适合快速预览，medium 是面向应用输出的默认值。
+    options:
+      - value: low
+        label:
+          en_US: Low
+          zh_Hans: Low
+      - value: medium
+        label:
+          en_US: Medium
+          zh_Hans: Medium
+      - value: high
+        label:
+          en_US: High
+          zh_Hans: High
+      - value: auto
+        label:
+          en_US: Auto
+          zh_Hans: Auto
+  - name: n
+    type: number
+    required: false
+    form: form
+    default: 1
+    min: 1
+    max: 10
+    label:
+      en_US: Number of images
+      zh_Hans: Number of images
+    human_description:
+      en_US: Number of images to generate.
+      zh_Hans: 要生成的图片数量。
+  - name: output_format
+    type: select
+    required: false
+    form: form
+    default: jpeg
+    label:
+      en_US: Output format
+      zh_Hans: Output format
+    human_description:
+      en_US: JPEG is usually faster than PNG when transparency is not required.
+      zh_Hans: 不需要透明背景时，JPEG 通常比 PNG 更快。
+    options:
+      - value: jpeg
+        label:
+          en_US: JPEG
+          zh_Hans: JPEG
+      - value: webp
+        label:
+          en_US: WebP
+          zh_Hans: WebP
+      - value: png
+        label:
+          en_US: PNG
+          zh_Hans: PNG
+      - value: auto
+        label:
+          en_US: Auto
+          zh_Hans: Auto
+  - name: output_compression
+    type: number
+    required: false
+    form: form
+    default: 85
+    min: 0
+    max: 100
+    label:
+      en_US: Output compression
+      zh_Hans: Output compression
+    human_description:
+      en_US: Compression for JPEG/WebP output. Ignored for PNG or auto format.
+      zh_Hans: JPEG/WebP 输出压缩参数。PNG 或 auto 格式会忽略。
+  - name: background
+    type: select
+    required: false
+    form: form
+    default: opaque
+    label:
+      en_US: Background
+      zh_Hans: Background
+    human_description:
+      en_US: gpt-image-2 supports auto or opaque. Transparent background is intentionally unavailable.
+      zh_Hans: gpt-image-2 支持 auto 或 opaque。此工具不开放透明背景。
+    options:
+      - value: opaque
+        label:
+          en_US: Opaque
+          zh_Hans: Opaque
+      - value: auto
+        label:
+          en_US: Auto
+          zh_Hans: Auto
+  - name: stream
+    type: boolean
+    required: false
+    form: form
+    default: false
+    label:
+      en_US: Use streaming transport
+      zh_Hans: Use streaming transport
+    human_description:
+      en_US: Use OpenAI image streaming transport while emitting only the final completed image to Dify.
+      zh_Hans: 使用 OpenAI 图片流式传输，但只向 Dify 输出最终完成图片。
+  - name: user
+    type: string
+    required: false
+    form: form
+    label:
+      en_US: End-user ID
+      zh_Hans: End-user ID
+    human_description:
+      en_US: Optional stable end-user identifier for OpenAI abuse monitoring.
+      zh_Hans: 用于 OpenAI 滥用监控的可选稳定终端用户标识。
+extra:
+  python:
+    source: tools/gpt_image_2_generate.py
