@@ -1,9 +1,12 @@
 # GPT Image Generator Dify Plugin
 
-Custom Dify tool plugin for OpenAI `gpt-image-2` image editing.
+Custom Dify tool plugin for OpenAI `gpt-image-2` image generation and editing.
 
-The first tool is `gpt_image_2_edit_plus`, based on Dify's official OpenAI image edit
-tool but with these additional controls:
+Included tools:
+
+- `gpt_image_2_generate`: text-to-image generation with OpenAI `gpt-image-2`
+- `gpt_image_2_edit_plus`: image editing based on Dify's official OpenAI image edit
+  tool but with these additional controls:
 
 - `output_format`: `jpeg`, `webp`, `png`, or `auto`
 - `output_compression`: `0` to `100`, used only for JPEG/WebP
